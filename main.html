@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Portfolio | UI/UX & Healthcare Technology</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-midnight: #0a0e27;
+            --color-slate: #1e293b;
+            --color-ocean: #0891b2;
+            --color-sky: #06b6d4;
+            --color-cream: #fefce8;
+            --color-sand: #fef3c7;
+            --color-coral: #fb7185;
+            --color-text: #f8fafc;
+            --color-text-muted: #cbd5e1;
+            --gradient-hero: linear-gradient(135deg, #0a0e27 0%, #1e293b 50%, #0c4a6e 100%);
+            --gradient-accent: linear-gradient(90deg, #06b6d4 0%, #0891b2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--gradient-hero);
+            color: var(--color-text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Header */
+        header {
+            padding: 3rem 0 4rem;
+            position: relative;
+        }
+
+        .header-content {
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-sky) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: var(--color-text-muted);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* Project Cards */
+        .projects-grid {
+            display: grid;
+            gap: 4rem;
+            padding: 2rem 0 6rem;
+        }
+
+        .project-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+            animation: fadeInScale 0.8s ease-out backwards;
+        }
+
+        .project-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .project-card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 80px rgba(6, 182, 212, 0.2);
+        }
+
+        .project-header {
+            padding: 3rem 3rem 2rem;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(8, 145, 178, 0.05) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-accent);
+        }
+
+        .project-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            color: var(--color-sky);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--color-cream);
+            line-height: 1.2;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            color: var(--color-sky);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-body {
+            padding: 3rem;
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-cream);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--color-sky);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--color-sky);
+        }
+
+        .subsection {
+            margin-bottom: 1.5rem;
+        }
+
+        .subsection-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--color-sky);
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: var(--color-text-muted);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        strong {
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: rgba(6, 182, 212, 0.08);
+            border-left: 3px solid var(--color-sky);
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0;
+        }
+
+        /* Feature Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .feature-item {
+            background: rgba(15, 23, 42, 0.5);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(6, 182, 212, 0.1);
+            border-color: rgba(6, 182, 212, 0.3);
+            transform: translateX(4px);
+        }
+
+        .feature-title {
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .feature-desc {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Role Table */
+        .role-grid {
+            display: grid;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .role-item {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 1.5rem;
+            background: rgba(15, 23, 42, 0.4);
+            padding: 1.25rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            align-items: start;
+        }
+
+        .role-label {
+            font-weight: 700;
+            color: var(--color-sky);
+            font-size: 0.95rem;
+        }
+
+        .role-desc {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* Tags */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background: rgba(6, 182, 212, 0.15);
+            color: var(--color-sky);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        /* Demo Link Button */
+        .demo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gradient-accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+            margin-top: 1rem;
+        }
+
+        .demo-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.4);
+        }
+
+        .demo-link svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 4rem 0 3rem;
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .project-header,
+            .project-body {
+                padding: 2rem 1.5rem;
+            }
+
+            .role-item {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Decorative Elements */
+        .decorative-circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        .circle-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--color-sky) 0%, transparent 70%);
+            top: -300px;
+            right: -200px;
+        }
+
+        .circle-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--color-coral) 0%, transparent 70%);
+            bottom: -100px;
+            left: -150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="grain"></div>
+    <div class="decorative-circle circle-1"></div>
+    <div class="decorative-circle circle-2"></div>
+
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>Mohit Manoj Barade</h1>
+                <p class="subtitle">UI/UX Engineering & Healthcare Technology</p>
+            </div>
+        </header>
+
+        <main class="projects-grid">
+            <!-- Project 1: RecipeBox (swapped to first position) -->
+            <article class="project-card">
+                <div class="project-header">
+                    <div class="project-number">PROJECT 01</div>
+                    <h2 class="project-title">RecipeBox</h2>
+                    <p class="project-subtitle">Advanced Web Accessibility (WCAG 2.1 AA Compliance)</p>
+                    <a href="YOUR_RECIPEBOX_DEPLOYMENT_LINK_HERE" target="_blank" rel="noopener noreferrer" class="demo-link">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                        </svg>
+                        View Live Demo
+                    </a>
+                </div>
+
+                <div class="project-body">
+                    <div class="section">
+                        <h3 class="section-title">Project Overview</h3>
+                        <p><strong>RecipeBox</strong> is a fully responsive, five-page web application engineered to demonstrate advanced web accessibility implementation and document remediation techniques. The platform features a recipe search dashboard, detailed recipe views, an interactive weekly meal planner, a dynamic shopping list, and an ingredient submission form.</p>
+                        <p>The primary objective was to build a visually engaging, modern "dark mode" interface without compromising strict <strong>WCAG 2.1 AA accessibility standards</strong>—proving that premium aesthetics and rigorous accessibility are not mutually exclusive.</p>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">Key Accessibility Achievements</h3>
+                        <p>The application was architected to ensure it is fully perceivable, operable, understandable, and robust for users relying on assistive technologies including screen readers, keyboard navigation, and voice control systems.</p>
+
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <div class="feature-title">Semantic Architecture</div>
+                                <p class="feature-desc">Strict HTML5 landmarks (&lt;header&gt;, &lt;main&gt;, &lt;nav&gt;, &lt;footer&gt;) with logical heading hierarchy (H1-H4) for seamless screen reader navigation.</p>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-title">Keyboard Navigation</div>
+                                <p class="feature-desc">Visually hidden "Skip to main content" link, logical tab order, and custom high-contrast focus indicators for keyboard-only users.</p>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-title">Accessible Data Tables</div>
+                                <p class="feature-desc">Complex visual data converted to semantic HTML tables with proper &lt;caption&gt;, &lt;thead&gt;, and scope attributes.</p>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-title">Dual Data Representation</div>
+                                <p class="feature-desc">CSS-based nutritional charts paired with .sr-only text providing exact values to screen reader users.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">Interactive Accessibility (ARIA)</h3>
+
+                        <div class="subsection">
+                            <h4 class="subsection-title">Dynamic State Announcements</h4>
+                            <p>Strategically utilized <strong>aria-live="polite"</strong> regions to announce dynamic UI changes, such as real-time shopping list updates ("1 of 4 items checked"), ensuring non-visual users receive immediate feedback.</p>
+                        </div>
+
+                        <div class="subsection">
+                            <h4 class="subsection-title">Advanced Form Handling</h4>
+                            <p>Built a sophisticated multi-section "Add Recipe" form with dynamic ingredient row addition. All inputs are explicitly linked to visible <strong>&lt;label&gt;</strong> elements, with required fields marked using <strong>aria-required</strong>, and inline validation errors connected via <strong>aria-describedby</strong> and <strong>role="alert"</strong>.</p>
+                        </div>
+
+                        <div class="subsection">
+                            <h4 class="subsection-title">Accessible Custom Controls</h4>
+                            <p>Engineered custom interactive elements including expandable filter panels (&lt;details&gt; / &lt;summary&gt;) and dietary toggle buttons using native, semantic HTML controls—guaranteeing built-in screen reader compatibility and keyboard support.</p>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">Inclusive Visual Design</h3>
+
+                        <div class="subsection">
+                            <h4 class="subsection-title">Color Contrast & Typography</h4>
+                            <p>Developed a premium dark-mode aesthetic built on CSS Custom Properties. Rigorously verified that all text, interactive elements, and focus indicators exceed WCAG AA contrast requirements (4.5:1 for normal text, 3:1 for large text and UI components).</p>
+                        </div>
+
+                        <div class="subsection">
+                            <h4 class="subsection-title">Reduced Motion Support</h4>
+                            <p>Implemented <strong>prefers-reduced-motion</strong> media queries to automatically detect user preferences and disable animations for users with vestibular disorders or motion sensitivity.</p>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">Value Delivered</h3>
+                        <div class="highlight-box">
+                            <p>RecipeBox serves as a production-ready demonstration of how inclusive design principles can be seamlessly integrated into complex web applications without sacrificing visual appeal. By prioritizing accessibility from the initial design phase, the project proves that accessible design enhances the experience for <strong>all users</strong> through clearer information architecture, more robust interaction patterns, and superior semantic structure.</p>
+                        </div>
+                    </div>
+
+                    <div class="tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">Vanilla JavaScript</span>
+                        <span class="tag">WCAG 2.1 AA</span>
+                        <span class="tag">ARIA</span>
+                        <span class="tag">Screen Reader Testing</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Project 2: ClinOps (swapped to second position) -->
+            <article class="project-card">
+                <div class="project-header">
+                    <div class="project-number">PROJECT 02</div>
+                    <h2 class="project-title">ClinOps</h2>
+                    <p class="project-subtitle">Agentic Clinical Trial Project Manager</p>
+                    <a href="YOUR_GOOGLE_DRIVE_DEMO_LINK_HERE" target="_blank" rel="noopener noreferrer" class="demo-link">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Watch Demo Video
+                    </a>
+                </div>
+
+                <div class="project-body">
+                    <div class="section">
+                        <h3 class="section-title">Overview</h3>
+                        <p>Clinical trials frequently suffer from fragmented tools, resulting in operational delays, missed compliance steps, and elevated inspection risks. <strong>ClinOps</strong> addresses these challenges by delivering a unified, AI-powered workspace that functions as an intelligent copilot for clinical operations.</p>
+                        <p>The platform reads complex clinical trial protocols, translates them into actionable milestones, and proactively identifies compliance risks. ClinOps empowers trial coordinators and regulatory advisors by streamlining audit preparation and document control—all while preserving their specialized medical and legal judgment.</p>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">Web Design & User Experience</h3>
+                        <p>The web application was meticulously designed to handle complex clinical data intuitively, prioritizing performance, clarity, and responsiveness across all user workflows.</p>
+
+                        <div class="subsection">
+                            <h4 class="subsection-title">Modern, High-Performance Stack</h4>
+                            <p>Built on <strong>Next.js 15</strong> (App Router) with <strong>TypeScript</strong>, leveraging Server-Side Rendering (SSR) for lightning-fast initial page loads and optimal SEO. Advanced code splitting and strict type safety ensure seamless scalability even with thousands of documents and protocol dependencies.</p>
+                        </div>
+
+                        <div class="subsection">
+                            <h4 class="subsection-title">Tailored, Role-Based Interfaces</h4>
+                            <p>The UI dynamically adapts based on the authenticated user's persona to reduce cognitive overload:</p>
+                            <div class="role-grid">
+                                <div class="role-item">
+                                    <div class="role-label">Trial Coordinators</div>
+                                    <p class="role-desc">Access operation-centric tabs: Trial Overview, Task Checklists, Trial Timeline, Patient Enrollment Tracking</p>
+                                </div>
+                                <div class="role-item">
+                                    <div class="role-label">Regulatory Advisors</div>
+                                    <p class="role-desc">Access compliance-centric tabs: Protocol Requirements, Risk & Controls, Audit Preparation, Documentation Review</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="subsection">
+                            <h4 class="subsection-title">Sophisticated Styling & Responsive Design</h4>
+                            <p>Utilizing <strong>Tailwind CSS</strong>, the system features a clean, accessible design that adapts beautifully across desktop, tablet, and mobile viewports with a professional, data-forward aesthetic specifically suited for enterprise healthcare software.</p>
+                        </div>
+
+                        <div class="subsection">
+                            <h4 class="subsection-title">Interactive Dashboards & Smart Widgets</h4>
+                            <p>The core dashboard elegantly visualizes enrollment status, milestone progress, and compliance tasks. A standout innovation is <strong>"Smart Send"</strong>—allowing users to automatically generate and pin structured dashboard widgets directly from AI chat insights, transforming conversational intelligence into persistent, actionable visualizations.</p>
+                        </div>
+
+                        <div class="subsection">
+                            <h4 class="subsection-title">Seamless AI Copilot Integration</h4>
+                            <p>The AI is deeply integrated as a context-aware clinical assistant. The UI maintains a natural split-view layout, enabling users to reference trial documents while simultaneously conversing with the AI to generate content, assess risks, or extract protocol requirements.</p>
+                        </div>
+
+                        <div class="subsection">
+                            <h4 class="subsection-title">Optimized Interactive Components</h4>
+                            <p>Complex UI components leverage advanced React patterns including <strong>useMemo</strong> and <strong>useCallback</strong> to prevent unnecessary re-renders, ensuring exceptional performance even when rendering hundreds of document version histories and protocol dependencies.</p>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">Reliability & Observability</h3>
+                        <div class="highlight-box">
+                            <p>To guarantee stability in mission-critical clinical settings, the UI is supported by <strong>167 passing tests</strong> spanning Unit, Integration, and End-to-End UI suites via <strong>Jest</strong> and <strong>React Testing Library</strong>. The application is fully instrumented with <strong>OpenTelemetry</strong>, feeding real-time metrics into <strong>Prometheus</strong>, <strong>Grafana</strong>, and <strong>Loki</strong> for comprehensive monitoring.</p>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-title">Measurable Impact</h3>
+                        <p>ClinOps fundamentally transforms clinical trial operations by reducing the "Protocol-to-Plan" conversion timeline through intelligent automation. Early adopters report <strong>substantial reductions in administrative overhead</strong> and <strong>significantly improved audit readiness</strong>, with compliance documentation preparation time cut by more than half.</p>
+                    </div>
+
+                    <div class="tags">
+                        <span class="tag">Next.js 15</span>
+                        <span class="tag">TypeScript</span>
+                        <span class="tag">Tailwind CSS</span>
+                        <span class="tag">OpenTelemetry</span>
+                        <span class="tag">Jest</span>
+                        <span class="tag">React Testing Library</span>
+                    </div>
+                </div>
+            </article>
+        </main>
+
+        <footer>
+            <p>Mohit Manoj Barade • UI/UX Engineering & Healthcare Technology</p>
+        </footer>
+    </div>
+</body>
+</html>
